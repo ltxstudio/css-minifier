@@ -1,13 +1,22 @@
 import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
+import withPWA from 'next-pwa';
 
-// Here we use the @cloudflare/next-on-pages next-dev module to allow us to use bindings during local development
-// (when running the application with `next dev`), for more information see:
-// https://github.com/cloudflare/next-on-pages/blob/main/internal-packages/next-dev/README.md
+// Run Cloudflare's local dev setup only in development mode
 if (process.env.NODE_ENV === 'development') {
   await setupDevPlatform();
 }
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+// PWA configuration
+const pwaConfig = withPWA({
+  dest: 'public',  // Service worker will be generated in the public directory
+  register: true,
+  skipWaiting: true,
+});
 
-export default nextConfig;
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  // Add any other configuration you need
+};
+
+export default pwaConfig(nextConfig);
