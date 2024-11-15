@@ -1,33 +1,82 @@
+/* Base Styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+/* Custom base styles */
+@layer base {
+  /* Global font settings */
+  html {
+    font-size: 16px;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F3F4F6; /* Background color */
+    color: #333333; /* Text color */
+    line-height: 1.6;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Add more global settings */
+  .btn {
+    @apply px-6 py-3 rounded-lg font-medium text-white bg-primary transition duration-300 ease-in-out;
+  }
+
+  .card {
+    @apply p-6 bg-white shadow-lg rounded-lg transition-all hover:shadow-xl;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* Custom Components */
+@layer components {
+  /* Button Style */
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-blue-700;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-gray-800 hover:bg-gray-300;
+  }
+
+  .btn-danger {
+    @apply bg-error text-white hover:bg-red-600;
+  }
+
+  .card {
+    @apply p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-all;
+  }
 }
 
+/* Custom Utilities */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  /* Custom spacing utilities */
+  .spacing-sm {
+    margin: 1rem;
+  }
+
+  .spacing-md {
+    margin: 2rem;
+  }
+
+  .spacing-lg {
+    margin: 3rem;
+  }
+
+  /* Animation utility for fade-in effect */
+  .fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 }
