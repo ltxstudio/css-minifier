@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import csso from 'csso';
+import CleanCSS from 'clean-css'; // Import clean-css
 import { FaSpinner } from 'react-icons/fa';
 
 export default function CSSForm({ setMinifiedCSS, setIsModalOpen }) {
@@ -15,7 +15,7 @@ export default function CSSForm({ setMinifiedCSS, setIsModalOpen }) {
     setSuccessMessage(''); // Reset success message
 
     try {
-      const minified = csso.minify(inputCSS).css;
+      const minified = new CleanCSS().minify(inputCSS).styles; // Minify using clean-css
       setMinifiedCSS(minified);
       setSuccessMessage('CSS minified successfully!');
       setInputCSS(''); // Clear the textarea after successful minification
@@ -23,7 +23,7 @@ export default function CSSForm({ setMinifiedCSS, setIsModalOpen }) {
     } catch (error) {
       // Log the error for debugging
       console.error('Minification error:', error);
-      
+
       // Show a more specific error message
       const errorMsg = error.message || 'An error occurred during minification. Please check your CSS.';
       setErrorMessage(errorMsg);
