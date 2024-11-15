@@ -72,8 +72,11 @@ export default function HomePage() {
         {minifiedCSS && (
           <div className="mt-8 p-4 bg-gray-100 rounded-md">
             <h3 className="text-xl font-semibold text-gray-800">Preview of Minified CSS</h3>
-            <div style={{ backgroundColor: '#f4f4f4', padding: '20px', borderRadius: '8px' }}>
-              <p style={{ ...JSON.parse(minifiedCSS) }}>This is how your minified CSS is applied!</p>
+            <div
+              className="p-4 bg-gray-200 rounded-md"
+              style={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}
+            >
+              {minifiedCSS}
             </div>
           </div>
         )}
