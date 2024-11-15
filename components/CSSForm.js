@@ -5,16 +5,26 @@ import { FaSpinner } from 'react-icons/fa';
 export default function CSSForm({ setMinifiedCSS, setIsModalOpen }) {
   const [inputCSS, setInputCSS] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
+    setErrorMessage(''); // Reset error message
+    setSuccessMessage(''); // Reset success message
+
+    try {
       const minified = csso.minify(inputCSS).css;
       setMinifiedCSS(minified);
-      setIsLoading(false);
+      setSuccessMessage('CSS minified successfully!');
+      setInputCSS(''); // Clear the textarea after successful minification
       setIsModalOpen(true);
-    }, 500);
+    } catch (error) {
+      setErrorMessage('An error occurred during minification. Please check your CSS.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -28,6 +38,19 @@ export default function CSSForm({ setMinifiedCSS, setIsModalOpen }) {
         onChange={(e) => setInputCSS(e.target.value)}
         className="w-full h-40 p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-300 resize-none"
       ></textarea>
+
+      {/* Display success or error message */}
+      {successMessage && (
+        <div className="text-green-600 bg-green-100 p-3 rounded-md">
+          {successMessage}
+        </div>
+      )}
+      {errorMessage && (
+        <div className="text-red-600 bg-red-100 p-3 rounded-md">
+          {errorMessage}
+        </div>
+      )}
+
       <button
         type="submit"
         disabled={isLoading}
