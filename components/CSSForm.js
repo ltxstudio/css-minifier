@@ -21,7 +21,12 @@ export default function CSSForm({ setMinifiedCSS, setIsModalOpen }) {
       setInputCSS(''); // Clear the textarea after successful minification
       setIsModalOpen(true);
     } catch (error) {
-      setErrorMessage('An error occurred during minification. Please check your CSS.');
+      // Log the error for debugging
+      console.error('Minification error:', error);
+      
+      // Show a more specific error message
+      const errorMsg = error.message || 'An error occurred during minification. Please check your CSS.';
+      setErrorMessage(errorMsg);
     } finally {
       setIsLoading(false);
     }
