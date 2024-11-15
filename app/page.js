@@ -14,10 +14,23 @@ import { FaRocket, FaBolt, FaQuestionCircle } from 'react-icons/fa';
 export default function HomePage() {
   const [minifiedCSS, setMinifiedCSS] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Function to simulate the loading state for CSS minification
+  const handleMinifySubmit = async (css) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setMinifiedCSS(css); // Simulate the minification process
+      setIsLoading(false);
+      setIsModalOpen(true); // Open the modal when minified
+    }, 1500); // Simulate a delay of 1.5 seconds
+  };
 
   return (
     <div className="bg-gradient-to-b from-gray-50 to-blue-50 min-h-screen flex flex-col">
       <Header />
+
+      {/* Main Content */}
       <motion.main
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -27,9 +40,16 @@ export default function HomePage() {
           CSS Minifier & Compressor
         </h1>
 
-        <CSSForm setMinifiedCSS={setMinifiedCSS} setIsModalOpen={setIsModalOpen} />
+        <CSSForm 
+          setMinifiedCSS={setMinifiedCSS} 
+          setIsModalOpen={setIsModalOpen} 
+          handleMinifySubmit={handleMinifySubmit}
+          isLoading={isLoading}
+        />
+
         <ResultDisplay minifiedCSS={minifiedCSS} />
 
+        {/* Responsive Sections */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
           <Section
             title="About"
@@ -47,7 +67,18 @@ export default function HomePage() {
             icon={<FaQuestionCircle className="text-green-500" size={40} />}
           />
         </div>
+
+        {/* Preview of Minified CSS */}
+        {minifiedCSS && (
+          <div className="mt-8 p-4 bg-gray-100 rounded-md">
+            <h3 className="text-xl font-semibold text-gray-800">Preview of Minified CSS</h3>
+            <div style={{ backgroundColor: '#f4f4f4', padding: '20px', borderRadius: '8px' }}>
+              <p style={{ ...JSON.parse(minifiedCSS) }}>This is how your minified CSS is applied!</p>
+            </div>
+          </div>
+        )}
       </motion.main>
+
       <Footer />
       <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </div>
